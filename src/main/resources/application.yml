@@ -1,7 +1,7 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/largedata
-    password: witb
+    password: 
     username: postgres
   jpa:
     database: postgresql
