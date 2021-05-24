@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StopWatch;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
@@ -28,7 +29,8 @@ public class LargeDataService {
         log.info("getLargeDataStream");
 
         List<TableA> rows = new ArrayList<>();
-
+        StopWatch sw = new StopWatch();
+        sw.start();
         try(Stream<TableA> streamTableA = tableARepository.findAllRecords()) {
             streamTableA.forEach(tableA -> {
                 rows.add(tableA);
@@ -40,6 +42,8 @@ public class LargeDataService {
                 }
             });
         }
+        sw.stop();
+        log.info("total time (ms): {}", sw.getTotalTimeMillis());
     }
 
 }
